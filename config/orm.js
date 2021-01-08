@@ -28,7 +28,7 @@ translateSql = (obj) => {
 // * Export the ORM object in module.exports.
 const orm = {
     selectAll: (table, callback) => {
-        var dbQuery = "SELECT * FROM" + table + ";";
+        let dbQuery = "SELECT * FROM" + table + ";";
 
         connection.query(dbQuery, (err, res) => {
             if (err) throw err;
@@ -36,7 +36,7 @@ const orm = {
         });
     },
     insertOne: (table, cols, vals, callback) => {
-        var dbQuery = "INSERT INTO " + table + " (" + cols.toString() + ") VALUES(" + createQmarks(vals.length) +");"
+        let dbQuery = "INSERT INTO " + table + " (" + cols.toString() + ") VALUES(" + createQmarks(vals.length) +");"
     
         console.log(dbQuery);
         connection.query(dbQuery, vals, (err, res) => {
@@ -46,7 +46,7 @@ const orm = {
 
     },
     updateOne: (table, objColVals, condition, callBack) => {
-        var dbQuery = "UPDATE " + table + " SET " + translateSql(objColVals) + " WHERE " + condition;
+        let dbQuery = "UPDATE " + table + " SET " + translateSql(objColVals) + " WHERE " + condition;
         console.log(dbQuery);
 
         connection.query(dbQuery, (err, res) => {
@@ -56,7 +56,7 @@ const orm = {
     },
     // not sure if i need this
     deleteOne: (table, condition, callBack) => {
-        var dbQuery = "DELETE FROM " + table + " WHERE " + condition;
+        let dbQuery = "DELETE FROM " + table + " WHERE " + condition;
         console.log(dbQuery);
 
         connection.query(dbQuery, (err, res) => {
