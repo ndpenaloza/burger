@@ -1,4 +1,3 @@
-const { or } = require("sequelize/types");
 const connection = require("../config/connection");
 const orm = require("../config/orm");
 
