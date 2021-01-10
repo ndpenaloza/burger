@@ -1,67 +1,33 @@
-const connection = require("../config/connection");
+// Dependencies
+const connection = require("./connection");
 
-createQmarks = (num) => {
-    var arr = [];
-    for (var i = 0; i < num; i++) {
-        arr.push("?");
-    }
-    return arr.toString();
-} 
-
-translateSql = (obj) => {
-    var arr = [];
-    for (var key in obj) {
-        var value = ob[key];
-        if (Object.hasOwnProperty.call(ob, key)) {
-            if (typeof value === "string" && value.indexOf(" ") >= 0) {
-                value = "'" + value + "'";
-            }
-            arr.push(key + "=" + value);
-        }
-        return arr.toString();
-    }
+dbQuery = (dbQuery, data) => {
+    return new Promise((resolve, reject) => {
+        connection.query(dbQuery, data, (err, res) => {
+            if (err) reject(err);
+            else resolve(res);
+        });
+    });
 }
-// In the orm.js file, create the methods that will execute the necessary MySQL commands in the controllers. These are the methods you will need to use in order to retrieve and store data in your database.
-// *            selectAll()
-//   *            insertOne()
-//               updateOne()
-// * Export the ORM object in module.exports.
+
+// The Mighty ORM
 const orm = {
-    selectAll: (table, callback) => {
-        let dbQuery = "SELECT * FROM" + table + ";";
-
-        connection.query(dbQuery, (err, res) => {
-            if (err) throw err;
-            callback(res);
-        });
+    selectAll: (table) => {
+        return dbQuery(`SELECT * FROM ${table};`);
     },
-    insertOne: (table, cols, vals, callback) => {
-        let dbQuery = "INSERT INTO " + table + " (" + cols.toString() + ") VALUES(" + createQmarks(vals.length) +");"
-    
-        console.log(dbQuery);
-        connection.query(dbQuery, vals, (err, res) => {
-            if (err) throw err;
-            callback(res);
-        })
 
+    insertOne: (table, data) => {
+        return dbQuery(`INSERT INTO ${table} (${Object.keys(data).join(",")}) VALUES (?)`, Object.values(data));
     },
-    updateOne: (table, objColVals, condition, callBack) => {
-        let dbQuery = "UPDATE " + table + " SET " + translateSql(objColVals) + " WHERE " + condition;
-        console.log(dbQuery);
 
-        connection.query(dbQuery, (err, res) => {
-            if (err) throw err;
-            callBack(res);
-        }); 
+    updateOne: (table, data, condition) => {
+        let updates = Object.keys(data).map(col => `${col} = ?`).join(",");
+        return dbQuery(`UPDATE ${table} SET ${updates} WHERE ${condition};`);
     },
-    // not sure if i need this
-    deleteOne: (table, condition, callBack) => {
-        let dbQuery = "DELETE FROM " + table + " WHERE " + condition;
-        console.log(dbQuery);
 
-        connection.query(dbQuery, (err, res) => {
-            if (err) throw err;
-            callBack(res);
-        });
+    deleteOne: (table, condition) => {
+        return dbQuery(`DELETE FROM ${table} WHERE ${condition});`);
     }
 }
+
+module.exports = orm;

@@ -1,0 +1,33 @@
+<div class="container">
+            <h1 class="center-align">Eat-Da-Burger!!</h1>
+            <textarea placeholder="Enter burger..." id="add-new-burger"></textarea>
+            <button class="btn waves-effect" id="submit-new-burger">Submit Burger!!</button>
+        </div>
+        <div class="container">
+            <div class="row col 12">
+                <div class="row col m6">
+                    <h3>Burgers</h3>
+                        <ul>
+                            {{#each burgers}}
+                            {{#unless devoured}}
+                                <p>{{this.id}}-{{this.burger_name}}</p>
+                                <button class="btn waves-effect">Eat Burger!</button>
+                            {{/unless}}
+                            {{/each}}
+                        </ul>
+                </div>
+                <div class="row col m6">
+                    <h3>Devoured</h3>
+                    <ul>
+                        {{#each burgers}}
+                        {{#if devoured}}
+                                <p>{{this.id}}-{{this.burger_name}}</p>
+                                <button class="btn waves-effect">Delete Burger</button>
+                        {{/if}}
+                        {{/each}}
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
