@@ -9,14 +9,15 @@ $(document).ready(() => {
     $("#submit-new-burger").submit((event) => {
 
         let newBurger = addNewBurger.val().trim();
-
-        $.ajax({
-            url: "/api/burgers",
-            method: "POST", 
-            data: { burger_name: burger_name}
-        }).then(() => {
-            location.reload();
-        });
+        if (newBurger) {
+            $.ajax({
+                url: "/api/burgers",
+                method: "POST", 
+                data: { burger_name: burger_name}
+            }).then(() => {
+                location.reload();
+            });
+        }
     });   
         
     // Eat burger
@@ -44,5 +45,4 @@ $(document).ready(() => {
                 url: "/api/burgers/" + id
             }).then(location.reload());
     });
-
 });

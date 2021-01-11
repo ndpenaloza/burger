@@ -6,8 +6,13 @@ var router = express.Router();
 
 // Index route
 router.get("/", (req, res) => {
-    burger.listBurgers()
-        .then(data => res.render("index",  {burgers: data}));
+    burger.listBurgers((data) => {
+        burgerObject = { burgers: data };
+        console.log(burgerObject);
+        res.render("index", burgerObject);
+
+    });
+        // .then(data => res.render("index",  {burgers: data}));
 });
 
 // Add new burger route
