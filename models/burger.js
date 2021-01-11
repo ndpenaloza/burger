@@ -2,16 +2,22 @@
 const orm = require("../config/orm");
 
 var burger = {
-    listBurgers: () => {
-        return orm.selectAll("burgers");
+    listBurgers: (callback) => {
+        orm.selectAll("burgers", (res) => {
+            callback(res);
+        });
     },
 
-    addBurger: (burger) => {
-         return orm.insertOne("burgers", { burger_name: burger});
+    addBurger: (cols, vals, callback) => {
+        orm.insertOne("burgers", cols, vals, (res) => {
+            callback(res);
+        });
     },
 
-    eatBurger: (id) => {
-        return orm.updateOne("burgers", { devoured: true }, `id = ${id}`);
+    eatBurger: (objectsToSQL, condition, callback) => {
+        orm.updateOne("burgers", objectsToSQL, condition, (res) => {
+            callback(res);
+        });
     }
 };
 
