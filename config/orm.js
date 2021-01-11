@@ -1,28 +1,58 @@
 // Dependencies
-const connection = require("./connection");
+const connection = require("../config/connection");
 
-dbQuery = (dbQuery, data) => {
-    return new Promise((resolve, reject) => {
-        connection.query(dbQuery, data, (err, res) => {
-            if (err) reject(err);
-            else resolve(res);
-        });
-    });
+// Helper function for SQL strings
+questionMarks = (num) => {
+    let arg = [];
+    for (var i = 0; i < num; i++) {
+        arg.push('?');
+    }
+    return arg.toString();
+}
+
+// Another helper function to change objects key value as string
+objectsToSQL = (obj) => {
+    let arg = [];
+    for (var key in obj) {
+        var value = obj[key];
+        if (Object.hasOwnProperty.call(obj, key)) {
+            if (typeof value === 'string' && value.indexOf(' ') >= 0) {
+                value = '"' + value + '"';
+            }
+            arg.push(key + '=' + value);
+        }
+    }
+    return arg.toString();
 }
 
 // The Mighty ORM
 const orm = {
-    selectAll: (table) => {
-        return dbQuery(`SELECT * FROM ${table};`);
+    selectAll: (table, callback) => {
+        let dbQuery = `SELECT * FROM ${table};`;
+        connection.query(dbQuery, (err, result) => {
+            if (err) throw err;
+            callback(result);
+        });
     },
 
-    insertOne: (table, data) => {
-        return dbQuery(`INSERT INTO ${table} (${Object.keys(data).join(",")}) VALUES (?)`, Object.values(data));
+    insertOne: (table, cols, vals, callback) => {
+        let dbQuery = `INSERT INTO ${table} (${cols.toString()}) VALUES (${questionMarks});`;
+        console.log(dbQuery);
+
+        connection.query(dbQuery, vals, (err, result) => {
+            if (err) throw err;
+            callback(result);
+        });
     },
 
-    updateOne: (table, data, condition) => {
-        let updates = Object.keys(data).map(col => `${col} = ?`).join(",");
-        return dbQuery(`UPDATE ${table} SET ${updates} WHERE ${condition};`);
+    updateOne: (table, data, condition, callback) => {
+        let dbQuery = `UPDATE ${table} SET ${objectsToSQL(data)} WHERE ${condition};`;
+        console.log(dbQuery);
+
+        connection.query(dbQuery, (err, result) => {
+            if (err) throw err;
+            callback(result);
+        });
     }
 };
 
