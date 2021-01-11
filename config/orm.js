@@ -23,11 +23,7 @@ const orm = {
     updateOne: (table, data, condition) => {
         let updates = Object.keys(data).map(col => `${col} = ?`).join(",");
         return dbQuery(`UPDATE ${table} SET ${updates} WHERE ${condition};`);
-    },
-
-    deleteOne: (table, condition) => {
-        return dbQuery(`DELETE FROM ${table} WHERE ${condition});`);
     }
-}
+};
 
 module.exports = orm;

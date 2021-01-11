@@ -2,30 +2,17 @@
 const orm = require("../config/orm");
 
 var burger = {
-    selectALL: (callBack) => {
-        orm.selectALL("burgers", (res) => {
-            callBack(res);
-        });
+    listBurgers: () => {
+        return orm.selectAll("burgers");
     },
 
-    insertOne: (cols, vals, callBack) => {
-        orm.selectALL("burgers", cols, vals, (res) => {
-            callBack(res);
-        });
+    addBurger: (burger) => {
+         return orm.insertOne("burgers", { burger_name: burger});
     },
 
-    updateOne: (objColVals, condition, callBack) => {
-        orm.selectALL("burgers", objColVals, condition, (res) => {
-            callBack(res);
-        });
-    },
-
-    deleteOne: (condition, callBack) => {
-        orm.deleteOne("burgers", condition, (res) => {
-            callBack(res);
-        });
+    eatBurger: (id) => {
+        return orm.updateOne("burgers", { devoured: true }, `id = ${id}`);
     }
-}
-
+};
 
 module.exports = burger;

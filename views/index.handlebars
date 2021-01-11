@@ -11,7 +11,7 @@
                             {{#each burgers}}
                             {{#unless devoured}}
                                 <p>{{this.id}}-{{this.burger_name}}</p>
-                                <button class="btn waves-effect">Eat Burger!</button>
+                                <button class="btn waves-effect eat-burger">Eat Burger!</button>
                             {{/unless}}
                             {{/each}}
                         </ul>
@@ -22,7 +22,6 @@
                         {{#each burgers}}
                         {{#if devoured}}
                                 <p>{{this.id}}-{{this.burger_name}}</p>
-                                <button class="btn waves-effect">Delete Burger</button>
                         {{/if}}
                         {{/each}}
                     </ul>
