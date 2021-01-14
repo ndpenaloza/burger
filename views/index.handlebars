@@ -1,30 +1,33 @@
 <div class="container">
-            <h1 class="center-align">Eat-Da-Burger!!</h1>
-            <textarea placeholder="Enter burger..." id="add-new-burger"></textarea>
+    <h1 class="center-align">Eat-Da-Burger!!</h1>
+    <form class="col s12 burger-form">
+        <div class="row">
+            <input placeholder="Enter burger..." id="add-new-burger"></input>
             <button type="submit" class="btn waves-effect" id="submit-new-burger">Submit Burger!!</button>
         </div>
-        <div class="container">
-            <div class="row col 12">
-                <div class="row col m6">
-                    <h3>Burgers:</h3>
-                        <ul>
-                            {{#each burgers}}
-                            {{#unless devoured}}
-                                <p>{{id}} - {{burger_name}}</p>
-                                <button class="btn waves-effect eat-burger-button">Eat Burger!</button>
-                            {{/unless}}
-                            {{/each}}
-                        </ul>
-                </div>
-                <div class="row col m6">
-                    <h3>Devoured:</h3>
-                    <ul>
-                        {{#each burgers}}
-                        {{#if devoured}}
-                                <p>{{id}} - {{burger_name}}</p>
-                        {{/if}}
-                        {{/each}}
-                    </ul>
-                </div>
-            </div>
+    </form>
+</div>
+<div class="container">
+    <div class="row col 12">
+        <div class="row col m6">
+            <h3>Burgers:</h3>
+                <ul>
+                    {{#each burgers}}
+                        {{#unless devoured}}
+                            {{>burgers/burgerlist devoured=false}}
+                        {{/unless}}
+                    {{/each}}
+                </ul>
         </div>
+        <div class="row col m6">
+            <h3>Devoured:</h3>
+            <ul>
+                {{#each burgers}}
+                    {{#if devoured}}
+                        {{>burgers/devouredlist devoured=true}}       
+                    {{/if}}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>

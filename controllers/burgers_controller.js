@@ -6,20 +6,36 @@ var router = express.Router();
 
 // Index route
 router.get("/", (req, res) => {
-    burger.listBurgers()
-        .then(data => res.render("index", { burgers: data }));
+    burger.all((data) => {
+        let burgerObject = { burgers: data };
+        console.log(burgerObject);
+        res.render('index', burgerObject);
     });
+});
 
 // Add new burger route
 router.post("/api/burgers", (req, res) => {
-        burger.addBurger(req.body.burger_name)
-            .then(() => res.end());
+        burger.create(["burger_name", "devoured"],
+        [req.body.burger_name, req.body.devoured], (result) => {
+            res.json({ id: result.insertId });
+        });
 });
 
-// Eat burger route
+// Eat burger route NEED TO COMPLETE THIS ROUTE
 router.put("/api/burgers/:id", (req, res) => {
-        burger.eatBurger(req.params.id)
-            .then(() => res.end());
+    let condition = "id = " + req.params.id;
+
+    console.log("condition", condition);
+
+    burger.update({
+        devoured: req.body.devoured
+    }, condition, (result) => {
+        if (result.changedRows === 0) {
+            return res.end();
+        } else {
+            res.end();
+        }
+    });
 });
 
 module.exports = router;

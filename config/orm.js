@@ -2,7 +2,7 @@
 const connection = require("../config/connection");
 
 // Helper function for SQL strings
-questionMarks = (num) => {
+function questionMarks(num) {
     let arg = [];
     for (var i = 0; i < num; i++) {
         arg.push('?');
@@ -11,23 +11,23 @@ questionMarks = (num) => {
 }
 
 // Another helper function to change objects key value as string
-objectsToSQL = (obj) => {
-    let arg = [];
-    for (var key in obj) {
-        var value = obj[key];
-        if (Object.hasOwnProperty.call(obj, key)) {
-            if (typeof value === 'string' && value.indexOf(' ') >= 0) {
-                value = '"' + value + '"';
+    function objectsToSQL(obj) {
+        let arg = [];
+        for (var key in obj) {
+            var value = obj[key];
+            if (Object.hasOwnProperty.call(obj, key)) {
+                if (typeof value === 'string' && value.indexOf(' ') >= 0) {
+                    value = '"' + value + '"';
+                }
+                arg.push(key + '=' + value);
             }
-            arg.push(key + '=' + value);
         }
-    }
-    return arg.toString();
+        return arg.toString();
 }
 
 // The Mighty ORM
 const orm = {
-    selectAll: (table, callback) => {
+    all: function(table, callback) {
         let dbQuery = `SELECT * FROM ${table};`;
         connection.query(dbQuery, (err, result) => {
             if (err) throw err;
@@ -35,8 +35,8 @@ const orm = {
         });
     },
 
-    insertOne: (table, cols, vals, callback) => {
-        let dbQuery = `INSERT INTO ${table} (${cols.toString()}) VALUES (${questionMarks});`;
+    create: function(table, cols, vals, callback) {
+        let dbQuery = `INSERT INTO ${table} (${cols.toString()}) VALUES (${questionMarks(vals.length)});`;
         console.log(dbQuery);
 
         connection.query(dbQuery, vals, (err, result) => {
@@ -45,7 +45,7 @@ const orm = {
         });
     },
 
-    updateOne: (table, data, condition, callback) => {
+    update: function(table, data, condition, callback) {
         let dbQuery = `UPDATE ${table} SET ${objectsToSQL(data)} WHERE ${condition};`;
         console.log(dbQuery);
 
