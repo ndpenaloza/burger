@@ -9,13 +9,17 @@
   4.  [Questions](#Questions)
 
 ## Description: 
-Express, MySQL, Node.js, and Handlebars app for creating a burger list.
+This project utilizes Express, MySQL, Node.js, and Handlebars to create an app for creating a burger list. This app follows the MVC structure. The user can vist the delpoyed site [here](https://evening-oasis-88894.herokuapp.com/), add a burger and insert this to a database, click a button to devour a burger, which will change data stored in the database.
+
+![Screenshot of Eat-Da-Burger](/public/assets/img/burger.png)
+
+Link to deployed app: [Eat-Da-Burger!](https://evening-oasis-88894.herokuapp.com/)
 
 ## Installation:
 Node.JS, Express, Handlebars, and MySQL must be installed. After cloning repository enter:
 ```
 npm i
-node server.js
+npm start
 ```
 
 ## License:
