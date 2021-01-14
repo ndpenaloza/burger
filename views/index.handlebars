@@ -2,7 +2,7 @@
     <h1 class="center-align">Eat-Da-Burger!!</h1>
     <form class="col s12 burger-form">
         <div class="row">
-            <input placeholder="Enter burger..." id="add-new-burger"></input>
+            <input placeholder="Enter burger..." id="add-new-burger">
             <button type="submit" class="btn waves-effect" id="submit-new-burger">Submit Burger!!</button>
         </div>
     </form>
@@ -14,7 +14,7 @@
                 <ul>
                     {{#each burgers}}
                         {{#unless devoured}}
-                            {{>burgers/burgerlist devoured=false}}
+                            {{>burgerlist}}
                         {{/unless}}
                     {{/each}}
                 </ul>
@@ -24,7 +24,7 @@
             <ul>
                 {{#each burgers}}
                     {{#if devoured}}
-                        {{>burgers/devouredlist devoured=true}}       
+                        {{>devouredlist}}       
                     {{/if}}
                 {{/each}}
             </ul>

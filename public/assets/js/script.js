@@ -10,7 +10,9 @@ $(document).ready(() => {
 
         event.preventDefault();
 
-        let newBurger = addNewBurger.val().trim();
+        let newBurger = {
+            burgerName: addNewBurger.val().trim()
+        }
         
         if (newBurger) {
             $.ajax("/api/burgers", {
@@ -26,12 +28,12 @@ $(document).ready(() => {
       
     $(".eat-burger-button").on("click", (event) => {
             event.preventDefault();
-            let id = $(this).data("id");
+            let id = $(event.target).data("id");
             
             $.ajax("/api/burgers/" + id, {
                 type: "PUT",
-                data: { devoured: 1}
-            }).then(() =>{
+                data: { devoured: true}
+            }).then(() => {
                 console.log("Burger has been devoured");
                 location.reload()
             });
