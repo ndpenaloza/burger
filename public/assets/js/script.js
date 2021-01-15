@@ -1,5 +1,3 @@
-// script.js
-
 $(document).ready(() => {
 
     // Grabing the element for adding new burger
@@ -25,7 +23,7 @@ $(document).ready(() => {
         }
     });   
         
-      
+     // Click event to devour burger 
     $(".eat-burger-button").on("click", (event) => {
             event.preventDefault();
             let id = $(event.target).data("id");

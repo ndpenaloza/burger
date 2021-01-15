@@ -4,7 +4,7 @@ const burger = require("../models/burger");
 
 var router = express.Router();
 
-// Index route
+// Index route - get
 router.get("/", (req, res) => {
     burger.all((data) => {
         let burgerObject = { burgers: data };
@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
     });
 });
 
-// Add new burger route
+// Add new burger route - post
 router.post("/api/burgers", (req, res) => {
         burger.create(["burger_name"],
         [req.body.burgerName], (result) => {
@@ -21,7 +21,7 @@ router.post("/api/burgers", (req, res) => {
         });
 });
 
-// Eat burger route NEED TO COMPLETE THIS ROUTE
+// Eat burger route - update
 router.put("/api/burgers/:id", (req, res) => {
     let condition = "id = " + req.params.id;
 
