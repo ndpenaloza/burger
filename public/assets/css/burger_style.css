@@ -1,0 +1,19 @@
+
+body {
+    background-image: url('../img/fancyBurger.jpg');
+}
+
+h1 {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+h3 {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+::placeholder {
+    color: black;
+    opacity: .75;
+}
